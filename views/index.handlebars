@@ -1,0 +1,20 @@
+<label>{{this.burgerName}}</label>
+<div>
+  {{burgerData}}
+</div>
+<form class="update-form" action="/burgers/{{id}}">
+  {{#if devoured}}
+  <input type="hidden" name="devoured" value="0">
+  <button type="submit">
+    Order!
+  </button>
+  {{else}}
+  <input type="hidden" name="devoured" value="1">
+  <button type="submit">
+    Devoured!
+  </button>
+  {{/if}}
+</form>
+<form class="delete-form" action="/burgers/{{id}}">
+  <button type="submit">DELETE!</button>
+</form>
