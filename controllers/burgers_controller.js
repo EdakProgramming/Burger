@@ -7,9 +7,7 @@ router.get("/", function(req, res) {
     burger.all(function(data) {
         if (!req.xhr) {
             res.render("burger/index", { burgers: data });
-        } else {
-            res.render("partials/burger/all", { burgers: data, layout: false });
-        };
+        } 
     });
 });
 
