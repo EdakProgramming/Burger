@@ -2,42 +2,29 @@ var express = require("express");
 var router = express.Router();
 var burger = require("../models/burger.js");
 
-// xhr is refrencing jQuery. as in if the call is not coming from jQuery
+// This callback will redirect any requests with "/" to "/burgers"
 router.get("/", function(req, res) {
-    burger.all(function(data) {
-        if (!req.xhr) {
-            res.render("burger/index", { burgers: data });
-        } 
+   res.redirect("/burgers");
+});
+
+
+router.get("/burgers", function(req, res) {
+    burger.all(function (burgerData) {
+        res.render("index", {burger_data: burgerData});
     });
 });
 
-router.post("/", function(req, res) {
-    burger.create({
-        burger_name: req.body.burger_name,
-        devoured: req.body.devoured
-    }, function(data) {
-        res.json(data);
-        }
-    );
+router.post("/burgers/create", function(req, res) {
+    burger.create(req.body.burger_name, function(result) {
+        res.redirect("/");
+    });
 });
 
-router.put("/:id", function(req, res) {
-    burger.update(
-        { id: req.params.id }, 
-        { devoured: req.body.devoured }, 
-        function(data) {
-            res.json(data);
-        }
-    );
+router.put("/burgers/udpdate", function(req, res) {
+    burger.update(req.body.burger_id, function(data) {
+        res.redirect("/");
+    });
 });
 
-router.delete("/:id", function(req,res) {
-    burger.delete(
-        {id: req.params.id},
-        {devoured: req.body.devoured},
-        function(data) {
-            res.end();
-        }
-    );
-});
+
 module.exports = router;
