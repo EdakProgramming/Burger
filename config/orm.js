@@ -1,17 +1,5 @@
 var connection = require("./connection.js");
 
-// I borrowed this function from the solution in hopes of being able to get it to work, but I still get errors in the VALUES part of the queries. Will ask instructor for a solution
-function printQuestionMarks(num) {
-  var arr = [];
-
-  for (var i = 0; i < num; i++) {
-    arr.push("?");
-  }
-
-  return arr.toString();
-}
-
-
 
 var orm = {
     all: function(tableInput, callback) {
@@ -23,24 +11,18 @@ var orm = {
             }
         );
     },
-    create: function(tableName, obj, values, callback) {
-        var queryString = "INSERT INTO " + tableName;
-            queryString += " (";
-            queryString += obj.toString();
-            queryString += ") ";
-            queryString += "VALUES (";
-            queryString += printQuestionMarks(values.length);
-            queryString += ");";
-        connection.query(queryString, function(err, result) {
+    create: function(tableName, obj, callback) {
+        var createBurger = "INSERT INTO ?? (burger_name, devoured) VALUES (?,?);";
+        connection.query(createBurger, [tableName, obj, 0], function(err, result) {
                 if (err) throw err;
                 callback(result);
-                console.log(result);
+               
             });
     },
-    update: function(tableName, condition, obj, callback) {
+    update: function(tableName, id, callback) {
         connection.query(
-            "UPDATE ?? SET ? WHERE ?;", 
-            [tableName, obj, condition],
+            "UPDATE ?? SET devoured = 1 WHERE id = ?;", 
+            [tableName, id],
             function(err, result) {
                 if (err) throw err;
                 callback(result);

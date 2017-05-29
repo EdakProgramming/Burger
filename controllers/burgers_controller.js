@@ -20,11 +20,11 @@ router.post("/burgers/create", function(req, res) {
     });
 });
 
-router.put("/burgers/udpdate", function(req, res) {
-    burger.update(req.body.burger_id, function(data) {
+router.put("/burgers/update", function(req, res) {
+    burger.update(req.body.id, function(data) {
         res.redirect("/");
     });
 });
 
 
-module.exports = router;
+module.exports = router;                     
